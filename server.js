@@ -6,12 +6,12 @@ const axios = require('axios');
 const server = express();
 server.use(cors());
 server.use(express.json());
-
+const PORT = process.env.PORT;
 let inMemoryResponse = [];
 
 const Drink = require('./Drinks.json');
 
-mongoose.connect(`mongodb://ibrahim:0010097790@cluster0-shard-00-00.ekaaj.mongodb.net:27017,cluster0-shard-00-01.ekaaj.mongodb.net:27017,cluster0-shard-00-02.ekaaj.mongodb.net:27017/test?ssl=true&replicaSet=atlas-53s6ul-shard-0&authSource=admin&retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`${process.env.MONGO_DB_ATLAS}`, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
@@ -196,6 +196,6 @@ server.get('/', (req, res) => {
     res.send('All Good ...')
 })
 
-server.listen(3002, () => {
-    console.log(`Listenng on Port : ${3002}`);
+server.listen(PORT, () => {
+    console.log(`Listenng on Port : ${PORT}`);
 })
