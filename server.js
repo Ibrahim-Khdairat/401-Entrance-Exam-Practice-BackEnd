@@ -70,48 +70,42 @@ function seedUsersColction() {
 
 // Getting all drinks
 
-
-// const getting = async function (req,res){
-//     let data = await axios.get('www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic')
-//     res.send(data.data)
+// class Drinks {
+//     constructor(strDrink, strDrinkThumb, idDrink) {
+//         this.strDrink = strDrink,
+//         this.strDrinkThumb = strDrinkThumb,
+//         this.idDrink = idDrink
 //     }
-server.get('/drinks', gettingFromAPI)
+// }
+
+server.get('/drinks', async (req, res) => {
+
+    // res.send(Drink.drinks);
+
+    let url = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic'
+
+    if (inMemoryResponse.length !== 0) {
+        console.log('We already have data ...');
+
+        res.status(200).send(inMemoryResponse)
+    }
+    else {
+        console.log('New Request ...');
+
+        let result = await axios.get(url);
+
+        // let response  = result.data.drinks.map (drink =>{
+        //     return new Drinks ( drink.strDrink , drink.strDrinkThumb , drink.idDrink )
+        // })
+
+        inMemoryResponse = result.data.drinks;
+        res.send(result.data.drinks);
+
+    }
+})
 
 
 
-
-function gettingFromAPI(req, res) {
-
-    res.send(Drink.drinks);
-
-
- 
-
-
-
-
-    // let url = 'www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic'
-
-    // if (inMemoryResponse.length !== 0 ){
-    //     console.log('We already have data ...');
-
-    //     res.status(200).send(inMemoryResponse)
-    // }
-    // else {
-    //     console.log('New Request ...');
-
-    //     axios.get('www.thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic').then(DrinkResponse => {
-    //         inMemoryResponse = DrinkResponse.data;
-    //         console.log(inMemoryResponse);
-    //         res.status(200).send(inMemoryResponse)
-    //     }).catch(error => {
-    //         res.status(404).send(error)
-    //     })
-
-    // }
-
-
-}
 
 
 
